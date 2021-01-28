@@ -13,7 +13,7 @@ namespace Api.CrossCutting.DependecyInjection
      public static void ConfigureDependeciesRepository(IServiceCollection serviceCollection)
         {
             serviceCollection.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
-            serviceCollection.AddTransient<IUserRepository, UserImplementations>();
+            serviceCollection.AddScoped<IUserRepository, UserImplementations>();
             serviceCollection.AddDbContext<WorkContext>(
                 options => options.UseMySql("Server=localhost;Port=3306;Database=LocationDb;Uid=root;Pwd=root;")
             );            
