@@ -1,9 +1,11 @@
 using Api.CrossCutting.DependecyInjection;
+using Api.Domain.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace application
 {
@@ -25,6 +27,17 @@ namespace application
             // );
             ConfigureService.ConfigureDependenciesService(services);
             ConfigureRepository.ConfigureDependeciesRepository(services);
+
+            // Injeção de depedência para o login
+            var signingConfigurations = new SigningConfigurations();
+            services.AddSingleton(signingConfigurations);  
+
+            var tokenConfigurations = new TokenConfigurations();
+            new ConfigureFromConfigurationOptions<TokenConfigurations>(
+                Configuration.GetSection("TokenConfigurations"))
+                    .Configure(tokenConfigurations);
+            services.AddSingleton(tokenConfigurations);
+            // -----------------------------------          
             services.AddControllers();
         }
 
