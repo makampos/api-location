@@ -5,10 +5,12 @@ using Api.Domain.Dtos;
 using Api.Domain.Entities;
 using Api.Domain.Interfaces;
 using Api.Domain.Services.User;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Application.Controllers
 {
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class LoginController : ControllerBase
